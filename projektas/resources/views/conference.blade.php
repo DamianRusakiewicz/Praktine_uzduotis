@@ -12,7 +12,10 @@
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
             <div class="d-flex align-items-center justify-content-between">
-                <a href="{{ route('conferences.create') }}" class="btn btn-primary">Add Conference</a>
+                <!-- Add Conference Button -->
+                @if (auth()->user()->role === 'admin')
+                    <a href="{{ route('conferences.create') }}" class="btn btn-primary">Add Conference</a>
+                @endif
             </div>
             <hr>
             <table class="table table-hover">
@@ -41,12 +44,18 @@
                                     <button type="submit" class="btn btn-primary">Register</button>
                                 </form>
                                 <a href="{{ route('conferences.review', $conference->id) }}" class="btn btn-primary">Review</a>
-                                <a href="{{ route('conferences.edit', $conference->id) }}" class="btn btn-primary">Edit</a>
-                                <form action="{{ route('conferences.destroy', $conference->id) }}" method="POST" style="display: inline;">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-primary">Delete</button>
-                                </form>
+                                <!-- Edit Conference Button -->
+                                @if (auth()->user()->role === 'admin')
+                                    <a href="{{ route('conferences.edit', $conference->id) }}" class="btn btn-primary">Edit</a>
+                                @endif
+                                <!-- Delete Conference Button -->
+                                @if (auth()->user()->role === 'admin')
+                                    <form action="{{ route('conferences.destroy', $conference->id) }}" method="POST" style="display: inline;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-primary">Delete</button>
+                                    </form>
+                                @endif
                             </td>
                         </tr>
                     @endforeach
@@ -62,6 +71,7 @@
         </div>
     </div>
 </x-app-layout>
+
 
 </body>
 </html>
