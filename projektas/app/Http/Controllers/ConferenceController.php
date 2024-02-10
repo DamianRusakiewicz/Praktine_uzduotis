@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Conference;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\View;
 
 class ConferenceController extends Controller
@@ -31,24 +30,12 @@ class ConferenceController extends Controller
      */
     public function store(Request $request)
     {
-        // Validate the request
-        $validatedData = $request->validate([
-            'title' => 'required',
-            'author' => 'required',
-            'time' => 'required',
-            'description' => 'required',
-        ]);
+        // Validation...
 
-        // Create the conference
-        $conference = new Conference(); // Use the correct model
-        $conference->title = $validatedData['title'];
-        $conference->author = $validatedData['author'];
-        $conference->time = $validatedData['time'];
-        $conference->description = $validatedData['description'];
-        $conference->save();
+        // Create the conference...
 
-        // Redirect back to the conference.blade.php view
-        return View::make('conference')->with('success', 'Conference created successfully!')->with('conference', $conference);
+        // Redirect back to the conference index page
+        return redirect()->route('conferences.index')->with('success', 'Conference created successfully!');
     }
 
 
@@ -74,16 +61,32 @@ class ConferenceController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        // Validation...
+
+        // Find the conference...
+        $conference = Conference::findOrFail($id);
+
+        // Update the conference...
+        $conference->update($request->all());
+
+        // Redirect back to the conference index page
+        return redirect()->route('conferences.index')->with('success', 'Conference updated successfully!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id): \Illuminate\Http\RedirectResponse
     {
-        //
+        // Find the conference
+        $conference = Conference::findOrFail($id);
+
+        // Delete the conference
+        $conference->delete();
+
+        // Redirect back to the conference index page
+        return redirect()->route('conferences.index')->with('success', 'Conference deleted successfully!');
     }
 }
