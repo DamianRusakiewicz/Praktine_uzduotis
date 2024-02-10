@@ -3,37 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    @vite('resources/css/app.css')
     <title>Projektas</title>
-    <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            padding: 8px;
-            border-bottom: 1px solid #ddd;
-            text-align: left;
-        }
-        .action-column {
-            text-align: center;
-        }
-        .btn {
-            display: inline-block;
-            padding: 8px 16px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            text-decoration: none;
-        }
-        .btn-primary {
-            background-color: #007bff;
-        }
-        .btn-primary:hover {
-            background-color: #0056b3;
-        }
-    </style>
 </head>
 <body>
 
@@ -57,17 +28,20 @@
                 </thead>
                 <tbody>
                 @if(!empty($conferences))
-                    @foreach($conferences as $conference)
+                    @foreach($conferences as $key => $conference)
                         <tr>
-                            <td>{{ $conference->id }}</td>
+                            <td>{{ ++$key }}</td>
                             <td>{{ $conference->title }}</td>
                             <td>{{ $conference->author }}</td>
                             <td>{{ $conference->time }}</td>
                             <td>{{ $conference->description }}</td>
                             <td class="action-column">
-                                <a href="#" class="btn btn-primary">Register</a>
+                                <form action="{{ route('conferences.register', $conference->id) }}" method="POST" style="display: inline;">
+                                    @csrf
+                                    <button type="submit" class="btn btn-primary">Register</button>
+                                </form>
+                                <a href="{{ route('conferences.review', $conference->id) }}" class="btn btn-primary">Review</a>
                                 <a href="{{ route('conferences.edit', $conference->id) }}" class="btn btn-primary">Edit</a>
-                                <a href="#" class="btn btn-primary">Review</a>
                                 <form action="{{ route('conferences.destroy', $conference->id) }}" method="POST" style="display: inline;">
                                     @csrf
                                     @method('DELETE')

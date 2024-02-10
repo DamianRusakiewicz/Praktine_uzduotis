@@ -3,6 +3,8 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ConferenceController;
+use App\Http\Controllers\ConferenceRegistrationController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -28,6 +30,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::resource('conferences', ConferenceController::class); // <- Note the route name
     Route::view('/test', 'conference');
+    Route::get('conferences/{id}/register', [ConferenceController::class, 'showRegistrationForm'])->name('conferences.registerForm');
+    Route::post('conferences/{id}/register', [ConferenceRegistrationController::class, 'register'])->name('conferences.register');
+    Route::get('conferences/{id}/review', [ConferenceRegistrationController::class, 'review'])->name('conferences.review');
+    Route::delete('conferences/unregister/{registration}', [ConferenceRegistrationController::class, 'unregister'])->name('conferences.unregister');
 });
 
 

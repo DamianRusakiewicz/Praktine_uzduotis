@@ -17,6 +17,11 @@ class ConferenceController extends Controller
         return view('conference', ['conferences' => $conferences]);
     }
 
+/*    public function showRegistrationForm($id)
+    {
+        $conference = Conference::findOrFail($id);
+        return view('register-conference', compact('conference'));
+    }*/
 
     /**Show the form for creating a new resource.
      */
@@ -30,11 +35,20 @@ class ConferenceController extends Controller
      */
     public function store(Request $request)
     {
-        // Validation...
+        $validatedData = $request->validate([
+            'title' => 'required',
+            'author' => 'required',
+            'time' => 'required',
+            'description' => 'required',
+        ]);
 
-        // Create the conference...
-
-        // Redirect back to the conference index page
+        // Create the conference
+        $conference = new Conference(); // Use the correct model
+        $conference->title = $validatedData['title'];
+        $conference->author = $validatedData['author'];
+        $conference->time = $validatedData['time'];
+        $conference->description = $validatedData['description'];
+        $conference->save();
         return redirect()->route('conferences.index')->with('success', 'Conference created successfully!');
     }
 
