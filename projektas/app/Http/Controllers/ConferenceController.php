@@ -13,7 +13,9 @@ class ConferenceController extends Controller
      */
     public function index()
     {
-        $conferences = Conference::all();
+        // Get all active conferences
+        $conferences = Conference::where('expired', false)->get();
+
         return view('conference', ['conferences' => $conferences]);
     }
 
@@ -92,15 +94,21 @@ class ConferenceController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id): \Illuminate\Http\RedirectResponse
+    public function destroy($id)
     {
         // Find the conference
         $conference = Conference::findOrFail($id);
 
-        // Delete the conference
-        $conference->delete();
+        // Mark the conference as expired
+        $conference->expired = true;
+        $conference->save();
 
         // Redirect back to the conference index page
-        return redirect()->route('conferences.index')->with('success', 'Conference deleted successfully!');
+        return redirect()->route('conferences.index')->with('success', 'Conference marked as expired successfully!');
     }
+
+
+
+
+
 }

@@ -4,6 +4,8 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ConferenceController;
 use App\Http\Controllers\ConferenceRegistrationController;
+use App\Http\Controllers\RegisteredUsersController;
+use App\Http\Controllers\ExpiredConferenceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,8 +36,13 @@ Route::middleware('auth')->group(function () {
     Route::post('conferences/{id}/register', [ConferenceRegistrationController::class, 'register'])->name('conferences.register');
     Route::get('conferences/{id}/review', [ConferenceRegistrationController::class, 'review'])->name('conferences.review');
     Route::delete('conferences/unregister/{registration}', [ConferenceRegistrationController::class, 'unregister'])->name('conferences.unregister');
+    Route::get('/registered_users', [RegisteredUsersController::class, 'index'])->name('registered_users');
+    // Route for expired conferences
+    Route::get('/expired-conferences', function () {
+        return view('expired-conferences');
+    })->name('expired.index');
+    Route::get('/expired-conferences', [ExpiredConferenceController::class, 'showExpiredConferences'])->name('expired.index');
+
 });
-
-
 
 require __DIR__.'/auth.php';

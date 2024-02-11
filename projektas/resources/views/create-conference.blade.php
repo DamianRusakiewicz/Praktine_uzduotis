@@ -28,7 +28,7 @@
                         </div>
                         <div class="mb-4">
                             <label for="time" class="block text-gray-700 text-sm font-bold mb-2">Time:</label>
-                            <input type="text" name="time" id="time" class="form-input rounded-md shadow-sm mt-1 block w-full" value="{{ isset($conference) ? $conference->time : '' }}" required>
+                            <input type="datetime-local" name="time" id="time" class="form-input rounded-md shadow-sm mt-1 block w-full" value="{{ isset($conference) ? date('Y-m-d\TH:i', strtotime($conference->time)) : '' }}" required>
                         </div>
                         <div class="mb-4">
                             <label for="description" class="block text-gray-700 text-sm font-bold mb-2">Description:</label>

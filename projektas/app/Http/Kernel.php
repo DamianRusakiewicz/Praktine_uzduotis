@@ -23,6 +23,13 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
     ];
 
+    protected function schedule(Schedule $schedule)
+    {
+        $schedule->call(function () {
+            // Logic to find and move expired conferences to the expired list
+            Conference::where('time', '<', now())->update(['expired' => true]);
+        })->daily(); // Adjust the frequency as needed
+    }
     /**
      * The application's route middleware groups.
      *
