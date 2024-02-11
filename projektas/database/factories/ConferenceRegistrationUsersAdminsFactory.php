@@ -2,18 +2,19 @@
 
 namespace Database\Factories;
 
+use App\Models\ConferenceRegistrationUsersAdmins;
 use App\Models\User;
+use App\Models\Conference;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Facades\Hash;
 
-class UserFactory extends Factory
+class ConferenceRegistrationUsersAdminsFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = User::class;
+    protected $model = ConferenceRegistrationUsersAdmins::class;
 
     /**
      * Define the model's default state.
@@ -23,11 +24,8 @@ class UserFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->name(),
-            'email' => $this->faker->unique()->safeEmail(),
-            'email_verified_at' => now(),
-            'password' => Hash::make('password'),
-            'remember_token' => $this->faker->randomNumber(),
+            'user_id' => User::factory()->create()->id,
+            'conference_id' => Conference::factory()->create()->id,
         ];
     }
 }

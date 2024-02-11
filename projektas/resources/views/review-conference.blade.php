@@ -42,7 +42,7 @@
                                 <form action="{{ route('conferences.unregister', $registration->id) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Delete</button>
                                 </form>
                             @endif
                         </td>

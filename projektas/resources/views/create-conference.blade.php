@@ -35,7 +35,7 @@
                             <textarea name="description" id="description" class="form-textarea rounded-md shadow-sm mt-1 block w-full" required>{{ isset($conference) ? $conference->description : '' }}</textarea>
                         </div>
                         <div class="flex items-center justify-end">
-                            <button type="submit">Submit</button>
+                            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Submit</button>
                         </div>
                     </form>
                 </div>

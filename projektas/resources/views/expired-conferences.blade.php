@@ -3,13 +3,13 @@
     </x-slot>
 
     <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="max-w-full mx-auto sm:px-6 lg:px-8"> <!-- Changed max-width to max-w-full -->
             <div class="overflow-hidden bg-white dark:bg-gray-800 shadow sm:rounded-lg">
                 <div class="p-6">
                     <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-200">Expired Conferences</h2>
                     @if($expiredConferences->isNotEmpty())
                         <div class="overflow-x-auto">
-                            <table class="w-full whitespace-nowrap bg-gray-200 dark:bg-gray-600">
+                            <table class="whitespace-nowrap bg-gray-200 dark:bg-gray-600 w-full">
                                 <thead>
                                 <tr class="bg-gray-300 dark:bg-gray-700">
                                     <th class="px-6 py-3 text-xs font-semibold leading-4 tracking-wider text-left text-gray-700 dark:text-gray-200 uppercase">Title</th>
@@ -24,7 +24,12 @@
                                         <td class="px-6 py-4 whitespace-nowrap font-semibold text-gray-700 dark:text-gray-200">{{ $conference->title }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap font-semibold text-gray-700 dark:text-gray-200">{{ $conference->author }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap font-semibold text-gray-700 dark:text-gray-200">{{ $conference->time }}</td>
-                                        <td class="px-6 py-4 whitespace-nowrap font-semibold text-gray-700 dark:text-gray-200">{{ $conference->description }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap font-semibold text-gray-700 dark:text-gray-200 description-toggle">
+                                            <div class="truncate">
+                                                <span class="text">{{ $conference->description }}</span>
+                                                <span class="more">...</span>
+                                            </div>
+                                        </td>
                                     </tr>
                                 @endforeach
                                 </tbody>
@@ -38,4 +43,3 @@
         </div>
     </div>
 </x-app-layout>
-
